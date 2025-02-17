@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Monthly Report - May 2024</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 20px;
+            background-color: #f4f4f4;
+        }
+        .container {
+            max-width: 800px;
+            margin: auto;
+            background: white;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+        h1, h2 {
+            text-align: center;
+            color: #333;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 20px;
+        }
+        table, th, td {
+            border: 1px solid #ddd;
+        }
+        th, td {
+            padding: 12px;
+            text-align: left;
+        }
+        th {
+            background-color: #007bff;
+            color: white;
+        }
+        .footer {
+            text-align: center;
+            margin-top: 20px;
+            font-size: 14px;
+            color: #555;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Monthly Report - May 2024</h1>
+        <h2>Department of Veterinary Biochemistry</h2>
+        <h3>NTR College of Veterinary Science, Gannavaram</h3>
+        
+        <table>
+            <tr>
+                <th>SNO</th>
+                <th>SUBJECT</th>
+                <th>DETAILS</th>
+            </tr>
+            <tr>
+                <td>1</td>
+                <td>Introductory remarks of the month - VC visits</td>
+                <td>NIL</td>
+            </tr>
+            <tr>
+                <td>2</td>
+                <td>Conferences/Seminars Attended</td>
+                <td>National: NIL<br>International: NIL</td>
+            </tr>
+            <tr>
+                <td>3</td>
+                <td>Governance Activities</td>
+                <td>NIL</td>
+            </tr>
+            <tr>
+                <td>4</td>
+                <td>Trainings & Workshops</td>
+                <td>NIL</td>
+            </tr>
+            <tr>
+                <td>7</td>
+                <td>Research Activities</td>
+                <td>
+                    <strong>Research projects:</strong><br>
+                    - Dr. K. Aswani Kumar, Co-PI on RKVY project “Sexing of Spermatozoa in Buffaloes”<br>
+                    - Dr. M. Naveen Swaroop, Co-PI on “Effect of Dietary Inclusion of Rumen Digesta Meal (RDM) on Performance of Broilers”
+                </td>
+            </tr>
+            <tr>
+                <td>10</td>
+                <td>Creative & Innovative Initiatives</td>
+                <td>Granted patent from Patent office, GOI, Patent No 537505</td>
+            </tr>
+            <tr>
+                <td>11</td>
+                <td>Awards & Recognitions</td>
+                <td>Granted patent on “Synthetic Peptides and Antibodies targeted to bovine MX2 protein”</td>
+            </tr>
+            <tr>
+                <td>12</td>
+                <td>Projects Initiated/Completed</td>
+                <td>Effect of Dietary Inclusion of Rumen Digesta Meal on Performance of Broilers</td>
+            </tr>
+        </table>
+
+        <div class="footer">
+            <p>Report Date: 01.06.2024</p>
+        </div>
+    </div>
+</body>
+</html>
