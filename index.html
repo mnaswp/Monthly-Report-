@@ -3,7 +3,8 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Monthly Report - May 2024</title>
+    <title>Monthly Report</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/FileSaver.js/2.0.5/FileSaver.min.js"></script>
     <style>
         body {
             font-family: Arial, sans-serif;
@@ -65,7 +66,9 @@
 </head>
 <body>
     <div class="container">
-        <h1>Monthly Report - May 2024</h1>
+        <h1>Monthly Report - <span id="month-year"></span></h1>
+        <label>Department Name:</label>
+        <input type="text" id="department" placeholder="Enter Department Name"><br><br>
         <table>
             <tr>
                 <th>SNO</th>
@@ -75,71 +78,68 @@
             <tr>
                 <td>1</td>
                 <td>Introductory Remarks</td>
-                <td><input type="text" id="remarks" placeholder="Enter remarks"></td>
+                <td><input type="text" id="remarks"></td>
             </tr>
             <tr>
                 <td>2</td>
-                <td>Conferences Attended</td>
-                <td><input type="text" id="conferences" placeholder="Enter conferences attended"></td>
+                <td>Conferences/Seminars Attended</td>
+                <td><input type="text" id="conferences"></td>
             </tr>
             <tr>
                 <td>3</td>
+                <td>Governance Activities</td>
+                <td><input type="text" id="governance"></td>
+            </tr>
+            <tr>
+                <td>4</td>
+                <td>Trainings & Workshops</td>
+                <td><input type="text" id="trainings"></td>
+            </tr>
+            <tr>
+                <td>5</td>
                 <td>Research Activities</td>
-                <td><input type="text" id="research" placeholder="Enter research activities"></td>
+                <td><input type="text" id="research"></td>
+            </tr>
+            <tr>
+                <td>6</td>
+                <td>Creative & Innovative Initiatives</td>
+                <td><input type="text" id="innovation"></td>
             </tr>
         </table>
-        <button onclick="saveData()">Save Data</button>
-        <button onclick="downloadReport()">Download Report</button>
+        <button onclick="generateWordDoc()">Download Report as Word File</button>
     </div>
 
     <script>
-        function saveData() {
-            const remarks = document.getElementById("remarks").value;
-            const conferences = document.getElementById("conferences").value;
-            const research = document.getElementById("research").value;
+        function updateMonthYear() {
+            const now = new Date();
+            const options = { year: 'numeric', month: 'long' };
+            document.getElementById("month-year").textContent = now.toLocaleDateString('en-US', options);
+        }
+        
+        function generateWordDoc() {
+            let department = document.getElementById("department").value;
+            let remarks = document.getElementById("remarks").value;
+            let conferences = document.getElementById("conferences").value;
+            let governance = document.getElementById("governance").value;
+            let trainings = document.getElementById("trainings").value;
+            let research = document.getElementById("research").value;
+            let innovation = document.getElementById("innovation").value;
+            let monthYear = document.getElementById("month-year").textContent;
             
-            const reportData = { remarks, conferences, research };
-            localStorage.setItem("monthlyReport", JSON.stringify(reportData));
-            alert("Data saved successfully!");
+            let content = `Monthly Report - ${monthYear}\n\n` +
+                `Department: ${department}\n\n` +
+                `1. Introductory Remarks: ${remarks}\n` +
+                `2. Conferences/Seminars Attended: ${conferences}\n` +
+                `3. Governance Activities: ${governance}\n` +
+                `4. Trainings & Workshops: ${trainings}\n` +
+                `5. Research Activities: ${research}\n` +
+                `6. Creative & Innovative Initiatives: ${innovation}\n`;
+            
+            let blob = new Blob([content], { type: "application/msword" });
+            saveAs(blob, `${department}_Report_${monthYear.replace(' ', '_')}.docx`);
         }
-
-        function loadData() {
-            const savedData = localStorage.getItem("monthlyReport");
-            if (savedData) {
-                const { remarks, conferences, research } = JSON.parse(savedData);
-                document.getElementById("remarks").value = remarks;
-                document.getElementById("conferences").value = conferences;
-                document.getElementById("research").value = research;
-            }
-        }
-
-        function downloadReport() {
-            const remarks = document.getElementById("remarks").value;
-            const conferences = document.getElementById("conferences").value;
-            const research = document.getElementById("research").value;
-
-            const reportContent = `
-            Monthly Report - May 2024\n
-            Introductory Remarks: ${remarks}\n
-            Conferences Attended: ${conferences}\n
-            Research Activities: ${research}\n
-            `;
-
-            const blob = new Blob([reportContent], { type: "text/plain" });
-            const a = document.createElement("a");
-            a.href = URL.createObjectURL(blob);
-            a.download = "Monthly_Report_May2024.txt";
-            document.body.appendChild(a);
-            a.click();
-            document.body.removeChild(a);
-        }
-
-        // Load saved data when the page opens
-        window.onload = loadData;
+        
+        window.onload = updateMonthYear;
     </script>
 </body>
 </html>
-
-       
-           
-           
