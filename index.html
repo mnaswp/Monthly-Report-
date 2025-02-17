@@ -1,4 +1,3 @@
-<link rel="icon" type="image/x-icon" href="favicon.ico">
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -20,7 +19,7 @@
             border-radius: 8px;
             box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
         }
-        h1, h2, h3 {
+        h1 {
             text-align: center;
             color: #333;
         }
@@ -28,7 +27,6 @@
             width: 100%;
             border-collapse: collapse;
             margin-top: 20px;
-            background: white;
         }
         table, th, td {
             border: 1px solid #ddd;
@@ -41,20 +39,33 @@
             background-color: #007bff;
             color: white;
         }
-        .footer {
-            text-align: center;
-            margin-top: 20px;
+        td {
+            background-color: #f9f9f9;
+        }
+        input, textarea {
+            width: 100%;
+            border: none;
+            background: none;
             font-size: 14px;
-            color: #555;
+        }
+        button {
+            margin-top: 10px;
+            padding: 10px;
+            background: #007bff;
+            color: white;
+            border: none;
+            cursor: pointer;
+            display: block;
+            width: 100%;
+        }
+        button:hover {
+            background: #0056b3;
         }
     </style>
 </head>
 <body>
     <div class="container">
         <h1>Monthly Report - May 2024</h1>
-        <h2>Department of Veterinary Biochemistry</h2>
-        <h3>NTR College of Veterinary Science, Gannavaram</h3>
-        
         <table>
             <tr>
                 <th>SNO</th>
@@ -63,53 +74,72 @@
             </tr>
             <tr>
                 <td>1</td>
-                <td>Introductory remarks of the month - VC visits</td>
-                <td>NIL</td>
+                <td>Introductory Remarks</td>
+                <td><input type="text" id="remarks" placeholder="Enter remarks"></td>
             </tr>
             <tr>
                 <td>2</td>
-                <td>Conferences/Seminars Attended</td>
-                <td>National: NIL<br>International: NIL</td>
+                <td>Conferences Attended</td>
+                <td><input type="text" id="conferences" placeholder="Enter conferences attended"></td>
             </tr>
             <tr>
                 <td>3</td>
-                <td>Governance Activities</td>
-                <td>NIL</td>
-            </tr>
-            <tr>
-                <td>4</td>
-                <td>Trainings & Workshops</td>
-                <td>NIL</td>
-            </tr>
-            <tr>
-                <td>7</td>
                 <td>Research Activities</td>
-                <td>
-                    <strong>Research projects:</strong><br>
-                    - Dr. K. Aswani Kumar, Co-PI on RKVY project “Sexing of Spermatozoa in Buffaloes”<br>
-                    - Dr. M. Naveen Swaroop, Co-PI on “Effect of Dietary Inclusion of Rumen Digesta Meal (RDM) on Performance of Broilers”
-                </td>
-            </tr>
-            <tr>
-                <td>10</td>
-                <td>Creative & Innovative Initiatives</td>
-                <td>Granted patent from Patent office, GOI, Patent No 537505</td>
-            </tr>
-            <tr>
-                <td>11</td>
-                <td>Awards & Recognitions</td>
-                <td>Granted patent on “Synthetic Peptides and Antibodies targeted to bovine MX2 protein”</td>
-            </tr>
-            <tr>
-                <td>12</td>
-                <td>Projects Initiated/Completed</td>
-                <td>Effect of Dietary Inclusion of Rumen Digesta Meal on Performance of Broilers</td>
+                <td><input type="text" id="research" placeholder="Enter research activities"></td>
             </tr>
         </table>
-
-        <div class="footer">
-            <p>Report Date: 01.06.2024</p>
-        </div>
+        <button onclick="saveData()">Save Data</button>
+        <button onclick="downloadReport()">Download Report</button>
     </div>
+
+    <script>
+        function saveData() {
+            const remarks = document.getElementById("remarks").value;
+            const conferences = document.getElementById("conferences").value;
+            const research = document.getElementById("research").value;
+            
+            const reportData = { remarks, conferences, research };
+            localStorage.setItem("monthlyReport", JSON.stringify(reportData));
+            alert("Data saved successfully!");
+        }
+
+        function loadData() {
+            const savedData = localStorage.getItem("monthlyReport");
+            if (savedData) {
+                const { remarks, conferences, research } = JSON.parse(savedData);
+                document.getElementById("remarks").value = remarks;
+                document.getElementById("conferences").value = conferences;
+                document.getElementById("research").value = research;
+            }
+        }
+
+        function downloadReport() {
+            const remarks = document.getElementById("remarks").value;
+            const conferences = document.getElementById("conferences").value;
+            const research = document.getElementById("research").value;
+
+            const reportContent = `
+            Monthly Report - May 2024\n
+            Introductory Remarks: ${remarks}\n
+            Conferences Attended: ${conferences}\n
+            Research Activities: ${research}\n
+            `;
+
+            const blob = new Blob([reportContent], { type: "text/plain" });
+            const a = document.createElement("a");
+            a.href = URL.createObjectURL(blob);
+            a.download = "Monthly_Report_May2024.txt";
+            document.body.appendChild(a);
+            a.click();
+            document.body.removeChild(a);
+        }
+
+        // Load saved data when the page opens
+        window.onload = loadData;
+    </script>
 </body>
 </html>
+
+       
+           
+           
