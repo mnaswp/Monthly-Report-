@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Monthly Report</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/FileSaver.js/2.0.5/FileSaver.min.js"></script>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 20px;
+            background-color: #f4f4f4;
+        }
+        .container {
+            max-width: 900px;
+            margin: auto;
+            background: white;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+        h1 {
+            text-align: center;
+            color: #333;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 20px;
+        }
+        table, th, td {
+            border: 1px solid #ddd;
+        }
+        th, td {
+            padding: 12px;
+            text-align: left;
+        }
+        th {
+            background-color: #007bff;
+            color: white;
+        }
+        td {
+            background-color: #f9f9f9;
+        }
+        input, textarea {
+            width: 100%;
+            border: none;
+            background: none;
+            font-size: 14px;
+        }
+        button {
+            margin-top: 10px;
+            padding: 10px;
+            background: #007bff;
+            color: white;
+            border: none;
+            cursor: pointer;
+            display: block;
+            width: 100%;
+        }
+        button:hover {
+            background: #0056b3;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1 id="report-title">Monthly Report - <span id="selected-month">Select a Month</span></h1>
+        <label>Department Name:</label>
+        <input type="text" id="department" placeholder="Enter Department Name"><br><br>
+        <label>Report Month:</label>
+        <input type="month" id="report-month" onchange="updateMonthDisplay()"><br><br>
+        <table>
+            <tr>
+                <th>S.No</th>
+                <th>Subject</th>
+                <th>Details</th>
+            </tr>
+            <tr><td>1</td><td>Introductory remarks of the month - VC visits</td><td><textarea id="vc_visits"></textarea></td></tr>
+            <tr><td>2</td><td>Important conferences/meetings/seminars attended</td><td><textarea id="conferences"></textarea></td></tr>
+            <tr><td>3</td><td>Activities related to governance</td><td><textarea id="governance"></textarea></td></tr>
+            <tr><td>4</td><td>Trainings and workshops organized as Resource person</td><td><textarea id="trainings"></textarea></td></tr>
+            <tr><td>5</td><td>Co-curricular activities</td><td><textarea id="co_curricular"></textarea></td></tr>
+            <tr><td>6</td><td>NCC/NSS service programmes</td><td><textarea id="ncc_nss"></textarea></td></tr>
+            <tr><td>7</td><td>Research activities (Projects & Publications)</td><td><textarea id="research"></textarea></td></tr>
+            <tr><td>8</td><td>Students support practices</td><td><textarea id="student_support"></textarea></td></tr>
+            <tr><td>9</td><td>Extension and community-oriented activities</td><td><textarea id="extension"></textarea></td></tr>
+            <tr><td>10</td><td>Creative & Innovative initiatives in curriculum, teaching, evaluation</td><td><textarea id="innovation"></textarea></td></tr>
+            <tr><td>11</td><td>Awards & Recognitions</td><td><textarea id="awards"></textarea></td></tr>
+            <tr><td>12</td><td>Projects initiated or completed</td><td><textarea id="projects"></textarea></td></tr>
+            <tr><td>13</td><td>Convocation pendency or proposal</td><td><textarea id="convocation"></textarea></td></tr>
+            <tr><td>14</td><td>Any other remarks/suggestions</td><td><textarea id="remarks"></textarea></td></tr>
+        </table>
+        <button onclick="generateWordDoc()">Download Report as Word File</button>
+    </div>
+
+    <script>
+        function updateMonthDisplay() {
+            let reportMonth = document.getElementById("report-month").value;
+            if (reportMonth) {
+                let date = new Date(reportMonth + "-01");
+                let options = { year: 'numeric', month: 'long' };
+                let formattedMonth = date.toLocaleDateString('en-US', options);
+                document.getElementById("selected-month").textContent = formattedMonth;
+            }
+        }
+
+        function generateWordDoc() {
+            let department = document.getElementById("department").value;
+            let reportMonth = document.getElementById("selected-month").textContent;
+
+            let content = `Monthly Report - ${reportMonth}\n\nDepartment: ${department}\n\n`;
+            let fields = ["vc_visits", "conferences", "governance", "trainings", "co_curricular", "ncc_nss", "research", "student_support", "extension", "innovation", "awards", "projects", "convocation", "remarks"];
+            let labels = [
+                "Introductory remarks of the month - VC visits",
+                "Important conferences/meetings/seminars attended",
+                "Activities related to governance",
+                "Trainings and workshops organized as Resource person",
+                "Co-curricular activities",
+                "NCC/NSS service programmes",
+                "Research activities (Projects & Publications)",
+                "Students support practices",
+                "Extension and community-oriented activities",
+                "Creative & Innovative initiatives in curriculum, teaching, evaluation",
+                "Awards & Recognitions",
+                "Projects initiated or completed",
+                "Convocation pendency or proposal",
+                "Any other remarks/suggestions"
+            ];
+
+            fields.forEach((id, index) => {
+                let value = document.getElementById(id).value;
+                content += `${index + 1}. ${labels[index]}: ${value}\n`;
+            });
+
+            let blob = new Blob([content], { type: "application/msword" });
+            saveAs(blob, `${department}_Report_${reportMonth.replace(' ', '_')}.docx`);
+        }
+    </script>
+</body>
+</html>
